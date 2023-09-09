@@ -11,5 +11,5 @@ export const Heading = ({text}) => {
 
 // Определение валидации для свойства text
 Heading.propTypes = {
-  text: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  text: PropTypes.string,
 };
