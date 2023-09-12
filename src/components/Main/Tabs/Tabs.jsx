@@ -1,7 +1,6 @@
 import style from './Tabs.module.css';
 
 export const Tabs = () => {
-  console.log(style);
   return (
     <ul className={style.list}>
       <li>
