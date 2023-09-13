@@ -13,6 +13,9 @@ export const Text = prop => {
     children,
     href,
     center,
+    medium,
+    bold,
+    onClickFn,
   } = prop;
 
   const classes = classNames(
@@ -22,10 +25,18 @@ export const Text = prop => {
     {[style[`fs${size}`]]: size},
     {[style[`fst${tsize}`]]: tsize}, // если передали tsize
     {[style[`fsd${dsize}`]]: dsize},
+    {[style.medium]: medium},
+    {[style.bold]: bold},
   );
 
+  const handleClick = () => {
+    if (onClickFn) {
+      onClickFn(); // Вызываем функцию fn, если она была передана
+    }
+  };
+
   return (
-    <As className={classes} href={href}>
+    <As className={classes} href={href} onClick={handleClick}>
       {children}
     </As>
   );
@@ -40,9 +51,13 @@ Text.propTypes = {
   className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.string,
+    PropTypes.number,
     PropTypes.object,
     PropTypes.array,
   ]),
   href: PropTypes.string,
   center: PropTypes.bool,
+  medium: PropTypes.bool,
+  bold: PropTypes.bool,
+  onClickFn: PropTypes.func,
 };

@@ -1,4 +1,3 @@
-
 .rating {
   grid-area: rating;
   display: flex;
@@ -34,12 +33,12 @@
   background-image: url('./img/down.svg');
 }
 
-.ups {
+/* .ups {
   font-weight: 700;
   font-size: 12px;
-  line-height: 130%;
-  color: #8f8f8f;
-}
+  line-height: 130%; */
+  /* color: #8f8f8f;
+} */
 
 @media (min-width: 580px) {
   .rating {
@@ -49,9 +48,9 @@
     justify-content: flex-start;
   }
 
-  .ups {
+  /* .ups {
     font-size: 16px;
-  }
+  } */
 
   .up,
   .down {
