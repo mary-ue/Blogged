@@ -20,6 +20,9 @@ const LIST = [
 export const Tabs = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdown, setIsDropDown] = useState(true);
+  const [selectedTitle, setSelectedTitle] = useState(
+    LIST.find((item) => item.value === 'Главная')
+  );
 
   const handleResize = () => {
     if (document.documentElement.clientWidth < 768) {
@@ -27,6 +30,11 @@ export const Tabs = () => {
     } else {
       setIsDropDown(false);
     }
+  };
+
+  const handleSelectedTitle = (value) => {
+    console.log(value);
+    setSelectedTitle(LIST.find((item) => item.value === value));
   };
 
   useEffect(() => {
@@ -41,22 +49,24 @@ export const Tabs = () => {
 
   return (
     <div className={style.container}>
-      {isDropdown && <div className={style.wrapperBtn}>
-        <button
-          className={style.btn}
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        >
-          add item
-          <ArrowIcon width={15} height={15} />
-        </button>
-      </div>}
+      {isDropdown && (
+        <div className={style.wrapperBtn}>
+          <button
+            className={style.btn}
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            {selectedTitle.value}
+            <ArrowIcon width={15} height={15} />
+          </button>
+        </div>
+      )}
       {(isDropdownOpen || !isDropdown) && (
         <ul className={style.list} onClick={() => setIsDropdownOpen(false)}>
           {LIST.map(({value, id, Icon}) => (
             <li className={style.item} key={id}>
               <button
                 className={style.btn}
-                onClick={() => {}}
+                onClick={() => handleSelectedTitle(value)}
               >
                 {value}
                 {Icon && <Icon width={30} height={30} />}
