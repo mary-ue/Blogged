@@ -1,11 +1,18 @@
 import PropTypes from 'prop-types';
 import style from './Heading.module.css';
+import {Text} from '../../../UI/Text';
 
 export const Heading = ({text}) => {
   return (
-    <h2 className={style.heading}>
+    <Text
+      className={style.heading}
+      As='h1'
+      size={22}
+      tsize={26}
+      center
+    >
       {text}
-    </h2>
+    </Text>
   );
 };
 
