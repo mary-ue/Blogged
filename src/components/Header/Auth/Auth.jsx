@@ -22,15 +22,30 @@ export const Auth = ({token}) => {
         console.log(iconImg);
         const img = iconImg.replace(/\?.*$/, '');
         setAuth({name, img});
+      })
+      .catch((error) => {
+        console.error(error);
+        setAuth({});
       });
   }, [token]);
 
   return (
     <div className={style.container}>
       {auth.name ? (
-        <img src={auth.img} title={auth.name} alt={`Аватар ${auth.name}`} />
+        <button className={style.btn}>
+          <img
+            className={style.img}
+            src={auth.img}
+            title={auth.name}
+            alt={`Аватар ${auth.name}`}
+          />
+        </button>
       ) : (
-        <Text As='a' href={urlAuth}>
+        <Text
+          className={style.authLink}
+          As='a'
+          href={urlAuth}
+        >
           <LoginIcon className={style.svg} />
         </Text>
       )}
