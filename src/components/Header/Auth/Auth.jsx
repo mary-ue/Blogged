@@ -5,9 +5,15 @@ import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
 import {useEffect, useState} from 'react';
 import {URL_API} from '../../../api/const';
+import Logout from './Logout';
 
-export const Auth = ({token}) => {
+export const Auth = ({token, delToken}) => {
   const [auth, setAuth] = useState('');
+  const [showLogoutBtn, setShowLogoutBtn] = useState(false);
+
+  const handleLogoutBtn = () => {
+    setShowLogoutBtn(!showLogoutBtn);
+  };
 
   useEffect(() => {
     if (!token) return;
@@ -17,13 +23,22 @@ export const Auth = ({token}) => {
         Authorization: `bearer ${token}`,
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 401) {
+          localStorage.removeItem('bearer');
+          throw new Error('Unauthorized');
+        }
+        return response.json();
+      })
       .then(({name, icon_img: iconImg}) => {
         console.log(iconImg);
         const img = iconImg.replace(/\?.*$/, '');
         setAuth({name, img});
       })
       .catch((error) => {
+        if (error.message === 'Unauthorized') {
+          console.error('Unauthorized');
+        }
         console.error(error);
         setAuth({});
       });
@@ -32,7 +47,7 @@ export const Auth = ({token}) => {
   return (
     <div className={style.container}>
       {auth.name ? (
-        <button className={style.btn}>
+        <button className={style.btn} onClick={handleLogoutBtn}>
           <img
             className={style.img}
             src={auth.img}
@@ -49,6 +64,7 @@ export const Auth = ({token}) => {
           <LoginIcon className={style.svg} />
         </Text>
       )}
+      {showLogoutBtn && <Logout delToken={delToken} />}
     </div>
   );
 };
@@ -56,4 +72,5 @@ export const Auth = ({token}) => {
 // Определение валидации для свойства auth
 Auth.propTypes = {
   token: PropTypes.string,
+  delToken: PropTypes.func,
 };
