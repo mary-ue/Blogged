@@ -3,46 +3,17 @@ import style from './Auth.module.css';
 import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
-import {useEffect, useState} from 'react';
-import {URL_API} from '../../../api/const';
+import {useState} from 'react';
 import Logout from './Logout';
+import {useAuth} from '../../../hooks/useAuth';
 
 export const Auth = ({token, delToken}) => {
-  const [auth, setAuth] = useState('');
+  const [auth, clearAuth] = useAuth(token);
   const [showLogoutBtn, setShowLogoutBtn] = useState(false);
 
   const handleLogoutBtn = () => {
     setShowLogoutBtn(!showLogoutBtn);
   };
-
-  useEffect(() => {
-    if (!token) return;
-
-    fetch(`${URL_API}/api/v1/me`, {
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (response.status === 401) {
-          localStorage.removeItem('bearer');
-          throw new Error('Unauthorized');
-        }
-        return response.json();
-      })
-      .then(({name, icon_img: iconImg}) => {
-        console.log(iconImg);
-        const img = iconImg.replace(/\?.*$/, '');
-        setAuth({name, img});
-      })
-      .catch((error) => {
-        if (error.message === 'Unauthorized') {
-          console.error('Unauthorized');
-        }
-        console.error(error);
-        setAuth({});
-      });
-  }, [token]);
 
   return (
     <div className={style.container}>
@@ -67,7 +38,7 @@ export const Auth = ({token, delToken}) => {
       {showLogoutBtn &&
         <Logout
           delToken={delToken}
-          setAuth={setAuth}
+          clearAuth={clearAuth}
           setShowLogoutBtn={setShowLogoutBtn}
         />}
     </div>

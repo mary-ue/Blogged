@@ -1,11 +1,11 @@
 import style from './Logout.module.css';
 import PropTypes from 'prop-types';
 
-export const Logout = ({delToken, setAuth, setShowLogoutBtn}) => {
+export const Logout = ({delToken, clearAuth, setShowLogoutBtn}) => {
   const handleLogout = () => {
     if (delToken) {
       delToken();
-      setAuth({});
+      clearAuth({});
       setShowLogoutBtn(false);
     }
   };
@@ -19,6 +19,6 @@ export const Logout = ({delToken, setAuth, setShowLogoutBtn}) => {
 
 Logout.propTypes = {
   delToken: PropTypes.func,
-  setAuth: PropTypes.func,
+  clearAuth: PropTypes.func,
   setShowLogoutBtn: PropTypes.func,
 };
