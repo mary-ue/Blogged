@@ -64,7 +64,12 @@ export const Auth = ({token, delToken}) => {
           <LoginIcon className={style.svg} />
         </Text>
       )}
-      {showLogoutBtn && <Logout delToken={delToken} />}
+      {showLogoutBtn &&
+        <Logout
+          delToken={delToken}
+          setAuth={setAuth}
+          setShowLogoutBtn={setShowLogoutBtn}
+        />}
     </div>
   );
 };
