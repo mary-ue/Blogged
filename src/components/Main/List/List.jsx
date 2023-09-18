@@ -1,6 +1,7 @@
-import {usePosts} from '../../../hooks/usePosts';
+import {useContext} from 'react';
 import style from './List.module.css';
 import Post from './Post';
+import {postsContext} from '../../../context/postsContext';
 
 export const List = () => {
   // const postsData = [
@@ -38,14 +39,12 @@ export const List = () => {
   //   }
   // ];
 
-  const [posts] = usePosts();
+  const {posts} = useContext(postsContext);
   console.log(posts);
 
   return (
     <ul className={style.list}>
       {posts?.map((postData) => {
-        console.log(postData.data);
-
         return (
           <Post key={postData.data.id} {...postData.data} />
         );

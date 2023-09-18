@@ -11,5 +11,5 @@ export const PostTime = ({created}) => {
 };
 
 PostTime.propTypes = {
-  created: PropTypes.string,
+  created: PropTypes.number,
 };
