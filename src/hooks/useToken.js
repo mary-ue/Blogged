@@ -4,12 +4,10 @@ export const useToken = (state) => {
   const [token, setToken] = useState(state);
 
   const delToken = () => {
-    if (location.pathname.includes('/auth')) {
-      console.log('Logout');
-      setToken(state);
-      localStorage.removeItem('bearer');
-      window.history.replaceState({}, document.title, window.location.origin);
-    }
+    console.log('Logout');
+    setToken(state);
+    localStorage.removeItem('bearer');
+    window.history.replaceState({}, document.title, window.location.origin);
   };
 
   useEffect(() => {

@@ -7,8 +7,8 @@ import {useState} from 'react';
 import Logout from './Logout';
 import {useAuth} from '../../../hooks/useAuth';
 
-export const Auth = ({token, delToken}) => {
-  const [auth, clearAuth] = useAuth(token);
+export const Auth = () => {
+  const [auth, clearAuth] = useAuth();
   const [showLogoutBtn, setShowLogoutBtn] = useState(false);
 
   const handleLogoutBtn = () => {
@@ -37,7 +37,6 @@ export const Auth = ({token, delToken}) => {
       )}
       {showLogoutBtn &&
         <Logout
-          delToken={delToken}
           clearAuth={clearAuth}
           setShowLogoutBtn={setShowLogoutBtn}
         />}
@@ -48,5 +47,4 @@ export const Auth = ({token, delToken}) => {
 // Определение валидации для свойства auth
 Auth.propTypes = {
   token: PropTypes.string,
-  delToken: PropTypes.func,
 };

@@ -1,8 +1,10 @@
 import {useEffect, useState} from 'react';
 import {URL_API} from '../api/const';
+import {useToken} from './useToken';
 
-export const useAuth = (token) => {
+export const useAuth = () => {
   const [auth, setAuth] = useState('');
+  const [token, delToken] = useToken('');
 
   useEffect(() => {
     if (!token) return;
@@ -14,7 +16,6 @@ export const useAuth = (token) => {
     })
       .then((response) => {
         if (response.status === 401) {
-          localStorage.removeItem('bearer');
           throw new Error('Unauthorized');
         }
         return response.json();
@@ -26,6 +27,8 @@ export const useAuth = (token) => {
       })
       .catch((error) => {
         if (error.message === 'Unauthorized') {
+          localStorage.removeItem('bearer');
+          delToken();
           console.error('Unauthorized');
         }
         console.error(error);
@@ -33,7 +36,10 @@ export const useAuth = (token) => {
       });
   }, [token]);
 
-  const clearAuth = () => setAuth({});
+  const clearAuth = () => {
+    setAuth({});
+    delToken();
+  };
 
   return [auth, clearAuth];
 };
