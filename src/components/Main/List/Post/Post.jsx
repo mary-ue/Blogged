@@ -6,20 +6,26 @@ import PostRating from './PostRating';
 import PostTime from './PostTime';
 import RemoveButton from './RemoveButton';
 
-export const Post = ({postData}) => {
-  const {title, author, ups, date} = postData;
+export const Post = (props) => {
+  const {title, author, ups, created} = props;
+  const imgUrl = props?.thumbnail;
 
   return (
     <li className={style.post}>
-      <PostImg title={title} />
+      <PostImg imgUrl={imgUrl} title={title} />
       <PostContent title={title} author={author} />
       <PostRating ups={ups} />
-      <PostTime date={date} />
+      <PostTime created={created} />
       <RemoveButton />
     </li>
   );
 };
 
 Post.propTypes = {
-  postData: PropTypes.object,
+  props: PropTypes.object,
+  title: PropTypes.string,
+  author: PropTypes.string,
+  ups: PropTypes.number,
+  created: PropTypes.string,
+  thumbnail: PropTypes.object,
 };
