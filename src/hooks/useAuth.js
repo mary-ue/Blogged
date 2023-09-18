@@ -1,10 +1,10 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {URL_API} from '../api/const';
-import {useToken} from './useToken';
+import {tokenContext} from '../context/tokenContext';
 
 export const useAuth = () => {
   const [auth, setAuth] = useState('');
-  const [token, delToken] = useToken('');
+  const {token, delToken} = useContext(tokenContext);
 
   useEffect(() => {
     if (!token) return;
