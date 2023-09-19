@@ -6,6 +6,10 @@ export const usePosts = () => {
   const {token} = useContext(tokenContext);
   const [posts, setPosts] = useState([]);
 
+  const delPosts = () => {
+    setPosts([]);
+  };
+
   useEffect(() => {
     if (!token) return;
 
@@ -24,5 +28,5 @@ export const usePosts = () => {
       });
   }, [token]);
 
-  return [posts];
+  return [posts, delPosts];
 };

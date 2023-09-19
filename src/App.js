@@ -7,12 +7,12 @@ import {PostsContextProvider} from './context/postsContext';
 function App() {
   return (
     <TokenContextProvider>
-      <AuthContextProvider>
-        <Header />
-        <PostsContextProvider>
+      <PostsContextProvider>
+        <AuthContextProvider>
+          <Header />
           <Main />
-        </PostsContextProvider>
-      </AuthContextProvider>
+        </AuthContextProvider>
+      </PostsContextProvider>
     </TokenContextProvider>
   );
 }

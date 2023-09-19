@@ -2,13 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {usePosts} from '../hooks/usePosts';
 
-export const postsContext = React.createContext([]);
+export const postsContext = React.createContext({
+  posts: [],
+  delPosts: () => {},
+});
 
 export const PostsContextProvider = ({children}) => {
-  const [posts] = usePosts();
+  const [posts, delPosts] = usePosts();
 
   return (
-    <postsContext.Provider value={{posts}}>
+    <postsContext.Provider value={{posts, delPosts}}>
       {children}
     </postsContext.Provider>
   );
