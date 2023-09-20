@@ -38,6 +38,7 @@ export const PostContent = ({title, author, markdown}) => {
           markdown={markdown}
           author={author}
           title={title}
+          closeModal={() => setIsModalOpen(false)}
         />}
     </div>
   );
