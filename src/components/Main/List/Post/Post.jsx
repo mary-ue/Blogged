@@ -7,12 +7,19 @@ import PostTime from './PostTime';
 import RemoveButton from './RemoveButton';
 
 export const Post = (props) => {
-  const {title, author, ups, created, thumbnail} = props;
+  const {
+    title,
+    author,
+    ups,
+    created,
+    thumbnail,
+    selftext: markdown,
+  } = props;
 
   return (
     <li className={style.post}>
       <PostImg thumbnail={thumbnail} title={title} />
-      <PostContent title={title} author={author} />
+      <PostContent title={title} author={author} markdown={markdown} />
       <PostRating ups={ups} />
       <PostTime created={created} />
       <RemoveButton />
@@ -27,4 +34,5 @@ Post.propTypes = {
   ups: PropTypes.number,
   created: PropTypes.number,
   thumbnail: PropTypes.string,
+  selftext: PropTypes.string,
 };
