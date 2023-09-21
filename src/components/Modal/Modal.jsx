@@ -1,23 +1,32 @@
 import ReactDOM from 'react-dom';
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import style from './Modal.module.css';
 import {ReactComponent as CloseIcon} from './img/close.svg';
 import Markdown from 'markdown-to-jsx';
+import {useCommentsData} from '../../hooks/useCommentsData';
+import {Text} from '../../UI/Text';
 
-export const Modal = ({title, author, markdown, closeModal}) => {
+export const Modal = ({closeModal, id}) => {
+  const [commentsData, clearCommentsData] = useCommentsData(id);
+  const [isLoading, setIsLoading] = useState(true);
+  console.log('commentsData', commentsData);
+  const post = commentsData[0];
+  console.log('post', post);
   const overlayRef = useRef(null);
 
   const handleClick = evt => {
     const target = evt.target;
     if (target === overlayRef.current) {
       closeModal();
+      clearCommentsData();
     }
   };
 
   const handleEscapeKey = evt => {
     if (evt.key === 'Escape') {
       closeModal();
+      clearCommentsData();
     }
   };
 
@@ -31,27 +40,39 @@ export const Modal = ({title, author, markdown, closeModal}) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (commentsData.length > 0) {
+      setIsLoading(false);
+    }
+  }, [commentsData]);
+
   return ReactDOM.createPortal(
     <div className={style.overlay} ref={overlayRef}>
       <div className={style.modal}>
-        <h2 className={style.title}>{title}</h2>
-        <div className={style.content}>
-          <Markdown options={{
-            overrides: {
-              a: {
-                props: {
-                  target: '_blank'
+        {isLoading ? (
+          <Text size={26} bold>Загрузка...</Text>
+        ) : (
+        <>
+          <h2 className={style.title}>{post?.title}</h2>
+          <div className={style.content}>
+            <Markdown options={{
+              overrides: {
+                a: {
+                  props: {
+                    target: '_blank'
+                  },
                 },
               },
-            },
-          }}>
-            {markdown}
-          </Markdown>
-        </div>
-        <p className={style.author}>{author}</p>
-        <button className={style.close} onClick={() => closeModal()}>
-          <CloseIcon />
-        </button>
+            }}>
+              {post.selftext}
+            </Markdown>
+          </div>
+          <p className={style.author}>{post?.author}</p>
+          <button className={style.close} onClick={() => closeModal()}>
+            <CloseIcon />
+          </button>
+        </>
+      )}
       </div>
     </div>,
     document.getElementById('modal-root'),
@@ -59,9 +80,7 @@ export const Modal = ({title, author, markdown, closeModal}) => {
 };
 
 Modal.propTypes = {
-  title: PropTypes.string,
-  author: PropTypes.string,
-  markdown: PropTypes.string,
   closeModal: PropTypes.func,
+  id: PropTypes.string,
 };
 

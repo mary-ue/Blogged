@@ -43,7 +43,7 @@ export const List = () => {
 
   return (
     <ul className={style.list}>
-      {posts?.map((postData) => {
+      {posts && posts?.map((postData) => {
         return (
           <Post key={postData.data.id} {...postData.data} />
         );

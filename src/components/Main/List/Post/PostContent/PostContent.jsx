@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {Text} from '../../../../../UI/Text';
 import Modal from '../../../../Modal';
 
-export const PostContent = ({title, author, markdown}) => {
+export const PostContent = ({title, author, markdown, id}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -35,9 +35,7 @@ export const PostContent = ({title, author, markdown}) => {
       </Text>
       {isModalOpen &&
         <Modal
-          markdown={markdown}
-          author={author}
-          title={title}
+          id={id}
           closeModal={() => setIsModalOpen(false)}
         />}
     </div>
@@ -48,4 +46,5 @@ PostContent.propTypes = {
   title: PropTypes.string,
   author: PropTypes.string,
   markdown: PropTypes.string,
+  id: PropTypes.string,
 };

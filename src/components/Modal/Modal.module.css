@@ -10,6 +10,7 @@
   left: 50%;
   background-color: var(--white);
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 20px 15px;
   inset: 5%;
   border-radius: 16px;
@@ -19,7 +20,10 @@
 .title {
   margin-bottom: 30px;
   padding-right: 50px;
-  font-size: 18px;
+}
+
+.author {
+  margin-bottom: 20px;
 }
 
 .content p {
@@ -47,6 +51,7 @@
 
 @media (min-width: 768px) {
   .modal {
+    padding: 30px;
     inset: 10%;
   }
 
@@ -56,5 +61,17 @@
   
   .modal p {
     font-size: 16px;
+  }
+
+  .author {
+    margin-bottom: 30px;
+  }
+  
+}
+
+@media (min-width: 1024px) {
+  .modal {
+    padding: 50px;
+    inset: 15%;
   }
 }
