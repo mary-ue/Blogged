@@ -6,12 +6,15 @@ import {ReactComponent as CloseIcon} from './img/close.svg';
 import Markdown from 'markdown-to-jsx';
 import {useCommentsData} from '../../hooks/useCommentsData';
 import {Text} from '../../UI/Text';
+import {FormComment} from './FormComment/FormComment';
+import {Comments} from './Comments/Comments';
 
 export const Modal = ({closeModal, id}) => {
   const [commentsData, clearCommentsData] = useCommentsData(id);
   const [isLoading, setIsLoading] = useState(true);
   console.log('commentsData', commentsData);
   const post = commentsData[0];
+  const comments = commentsData[1];
   console.log('post', post);
   const overlayRef = useRef(null);
 
@@ -67,7 +70,9 @@ export const Modal = ({closeModal, id}) => {
               {post.selftext}
             </Markdown>
           </div>
-          <p className={style.author}>{post?.author}</p>
+          <Text As='p' className={style.author}>{post?.author}</Text>
+          <FormComment />
+          <Comments comments={comments} />
           <button className={style.close} onClick={() => closeModal()}>
             <CloseIcon />
           </button>
