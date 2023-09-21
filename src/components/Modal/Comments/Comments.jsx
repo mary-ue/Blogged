@@ -4,7 +4,7 @@ import PostTime from '../../Main/List/Post/PostTime';
 import style from './Comments.module.css';
 
 export const Comments = ({comments}) => {
-  console.log('comments', comments.length);
+  // console.log('comments', comments.length);
 
   return (
     comments.length ? (
