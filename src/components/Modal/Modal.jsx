@@ -12,10 +12,8 @@ import {Comments} from './Comments/Comments';
 export const Modal = ({closeModal, id}) => {
   const [commentsData, clearCommentsData] = useCommentsData(id);
   const [isLoading, setIsLoading] = useState(true);
-  // console.log('commentsData', commentsData);
   const post = commentsData[0];
   const comments = commentsData[1];
-  // console.log('post', post);
   const overlayRef = useRef(null);
 
   const handleClick = evt => {
@@ -36,6 +34,7 @@ export const Modal = ({closeModal, id}) => {
   useEffect(() => {
     document.addEventListener('click', handleClick);
     document.addEventListener('keydown', handleEscapeKey);
+    console.log('Modal');
 
     return () => {
       document.removeEventListener('click', handleClick);

@@ -11,7 +11,7 @@ export const useCommentsData = (id) => {
   };
 
   useEffect(() => {
-    if (!token) return;
+    if (!token || !id) return;
 
     fetch(`${URL_API}/comments/${id}`, {
       headers: {
@@ -39,12 +39,13 @@ export const useCommentsData = (id) => {
         ]) => {
           const comments = children.map(item => item.data);
           setCommentsData([post, comments]);
+          console.log([post, comments]);
         },
       )
       .catch((err) => {
         console.error(err);
       });
-  }, [token]);
+  }, [id]);
 
   return [commentsData, clearCommentsData];
 };

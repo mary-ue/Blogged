@@ -13,14 +13,13 @@ export const Post = (props) => {
     ups,
     created,
     thumbnail,
-    selftext: markdown,
     id,
   } = props;
 
   return (
     <li className={style.post}>
       <PostImg thumbnail={thumbnail} title={title} />
-      <PostContent title={title} author={author} markdown={markdown} id={id} />
+      <PostContent title={title} author={author} id={id} />
       <PostRating ups={ups} />
       <PostTime created={created} />
       <RemoveButton />
@@ -35,6 +34,5 @@ Post.propTypes = {
   ups: PropTypes.number,
   created: PropTypes.number,
   thumbnail: PropTypes.string,
-  selftext: PropTypes.string,
   id: PropTypes.string,
 };
