@@ -1,27 +1,26 @@
-import {useContext, useRef, useState} from 'react';
+import {useContext, useState} from 'react';
 import {Text} from '../../../UI/Text';
 import style from './FormComment.module.css';
 import {authContext} from '../../../context/authContext';
+import {commentContext} from '../../../context/commentContext';
 
 export const FormComment = () => {
   const {auth} = useContext(authContext);
   const [isShowTextarea, setIsShowTextarea] = useState(false);
-  const textareaRef = useRef(null);
+  const {value, setValue} = useContext(commentContext);
 
   const handleShowTextarea = () => {
     setIsShowTextarea(true);
-    setTimeout(() => {
-      if (textareaRef.current) {
-        textareaRef.current.focus();
-      }
-    }, 0);
+  };
+
+  const handleChange = (evt) => {
+    setValue(evt.target.value);
   };
 
   const handleSubmitClick = (evt) => {
     evt.preventDefault();
-    console.log(textareaRef.current.value);
-    textareaRef.current.value = '';
-    setIsShowTextarea(false);
+    // setIsShowTextarea(false);
+    console.log(value);
   };
 
   return (
@@ -29,7 +28,11 @@ export const FormComment = () => {
       {isShowTextarea ? (
       <form className={style.form}>
         <Text As="h3" size={14} tsize={18}>{auth.name}</Text>
-        <textarea className={style.textarea} ref={textareaRef}></textarea>
+        <textarea
+          className={style.textarea}
+          value={value}
+          onChange={handleChange}
+        />
         <button
           className={style.btn}
           onClick={handleSubmitClick}
