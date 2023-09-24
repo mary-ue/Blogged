@@ -2,19 +2,22 @@ import {useContext, useState} from 'react';
 import {Text} from '../../../UI/Text';
 import style from './FormComment.module.css';
 import {authContext} from '../../../context/authContext';
-import {commentContext} from '../../../context/commentContext';
+import {useSelector, useDispatch} from 'react-redux';
+import {updateComment} from '../../../store';
 
 export const FormComment = () => {
+  const value = useSelector(state => state.comment);
+  const dispatch = useDispatch();
+
   const {auth} = useContext(authContext);
   const [isShowTextarea, setIsShowTextarea] = useState(false);
-  const {value, setValue} = useContext(commentContext);
 
   const handleShowTextarea = () => {
     setIsShowTextarea(true);
   };
 
   const handleChange = (evt) => {
-    setValue(evt.target.value);
+    dispatch(updateComment(evt.target.value));
   };
 
   const handleSubmitClick = (evt) => {
