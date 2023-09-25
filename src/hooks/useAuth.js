@@ -3,12 +3,12 @@ import {URL_API} from '../api/const';
 // import {tokenContext} from '../context/tokenContext';
 import {postsContext} from '../context/postsContext';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteToken, updateToken} from '../store';
+import {deleteToken, updateToken} from '../store/tokenReducer';
 
 export const useAuth = () => {
   const [auth, setAuth] = useState('');
   // const {token, delToken} = useContext(tokenContext);
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.tokenReducer.token);
   const dispatch = useDispatch();
   const {delPosts} = useContext(postsContext);
 

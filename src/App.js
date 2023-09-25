@@ -3,7 +3,8 @@ import Main from './components/Main';
 import {Provider} from 'react-redux';
 import {AuthContextProvider} from './context/authContext';
 import {PostsContextProvider} from './context/postsContext';
-import {store, updateToken} from './store';
+import {store} from './store';
+import {updateToken} from './store/tokenReducer';
 import {useEffect} from 'react';
 
 function App() {

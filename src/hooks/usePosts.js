@@ -4,7 +4,7 @@ import {URL_API, USER_AGENT} from '../api/const';
 import {useSelector} from 'react-redux';
 
 export const usePosts = () => {
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.tokenReducer.token);
   const [posts, setPosts] = useState([]);
 
   const delPosts = () => {
