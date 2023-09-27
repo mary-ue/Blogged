@@ -3,12 +3,12 @@ import style from './Auth.module.css';
 import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
-import {useContext, useState} from 'react';
+import {useState} from 'react';
 import Logout from './Logout';
-import {authContext} from '../../../context/authContext';
+import {useAuth} from '../../../hooks/useAuth';
 
 export const Auth = () => {
-  const {auth, clearAuth} = useContext(authContext);
+  const [auth, clearAuth] = useAuth();
   const [showLogoutBtn, setShowLogoutBtn] = useState(false);
 
   const handleLogoutBtn = () => {

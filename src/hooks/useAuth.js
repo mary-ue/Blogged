@@ -1,52 +1,22 @@
-import {useContext, useEffect, useState} from 'react';
-import {URL_API} from '../api/const';
+import {useContext, useEffect} from 'react';
 // import {tokenContext} from '../context/tokenContext';
 import {postsContext} from '../context/postsContext';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteToken, updateToken} from '../store/tokenReducer';
+import {authLogout, authRequestAsync} from '../store/auth/action';
 
 export const useAuth = () => {
-  const [auth, setAuth] = useState('');
+  const auth = useSelector(state => state.authReducer.data);
   // const {token, delToken} = useContext(tokenContext);
   const token = useSelector(state => state.tokenReducer.token);
   const dispatch = useDispatch();
   const {delPosts} = useContext(postsContext);
 
   useEffect(() => {
-    if (!token) return;
-
-    fetch(`${URL_API}/api/v1/me`, {
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (response.status === 401) {
-          throw new Error('Unauthorized');
-        }
-        return response.json();
-      })
-      .then(({name, icon_img: iconImg}) => {
-        const img = iconImg.replace(/\?.*$/, '');
-        setAuth({name, img});
-        dispatch(updateToken(token));
-      })
-      .catch((error) => {
-        if (error.message === 'Unauthorized') {
-          localStorage.removeItem('bearer');
-          dispatch(deleteToken());
-          window.history.replaceState({},
-            document.title, window.location.origin);
-          console.error('Unauthorized');
-        }
-        console.error(error);
-        setAuth({});
-      });
+    dispatch(authRequestAsync());
   }, [token]);
 
   const clearAuth = () => {
-    setAuth({});
-    dispatch(deleteToken());
+    dispatch(authLogout());
     localStorage.removeItem('bearer');
     window.history.replaceState({}, document.title, window.location.origin);
     delPosts();
