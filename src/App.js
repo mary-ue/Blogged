@@ -1,30 +1,28 @@
 import Header from './components/Header';
 import Main from './components/Main';
-import {Provider} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {AuthContextProvider} from './context/authContext';
 import {PostsContextProvider} from './context/postsContext';
-import {store} from './store';
 import {updateToken} from './store/tokenReducer';
+import {getToken} from './api/token';
 import {useEffect} from 'react';
+// import {updateToken} from './store/tokenReducer';
 
 function App() {
-  useEffect(() => {
-    const token = localStorage.getItem('bearer');
+  const dispatch = useDispatch();
 
-    if (token) {
-      store.dispatch(updateToken(token));
-    }
-  }, []);
+  useEffect(() => {
+    const token = getToken();
+    dispatch(updateToken(token));
+  }, [dispatch]);
 
   return (
-    <Provider store={store}>
-      <PostsContextProvider>
-        <AuthContextProvider>
-          <Header />
-          <Main />
-        </AuthContextProvider>
-      </PostsContextProvider>
-    </Provider>
+    <PostsContextProvider>
+      <AuthContextProvider>
+        <Header />
+        <Main />
+      </AuthContextProvider>
+    </PostsContextProvider>
   );
 }
 
