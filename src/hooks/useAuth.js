@@ -2,12 +2,13 @@ import {useContext, useEffect} from 'react';
 // import {tokenContext} from '../context/tokenContext';
 import {postsContext} from '../context/postsContext';
 import {useDispatch, useSelector} from 'react-redux';
-import {authLogout, authRequestAsync} from '../store/auth/action';
+import {authLogout, authRequestAsync} from '../store/auth/authAction';
 
 export const useAuth = () => {
-  const auth = useSelector(state => state.authReducer.data);
+  const auth = useSelector((state) => state.authReducer.data);
   // const {token, delToken} = useContext(tokenContext);
-  const token = useSelector(state => state.tokenReducer.token);
+  const token = useSelector((state) => state.tokenReducer.token);
+  const loading = useSelector((state) => state.authReducer.loading);
   const dispatch = useDispatch();
   const {delPosts} = useContext(postsContext);
 
@@ -22,5 +23,5 @@ export const useAuth = () => {
     delPosts();
   };
 
-  return [auth, clearAuth];
+  return [auth, loading, clearAuth];
 };

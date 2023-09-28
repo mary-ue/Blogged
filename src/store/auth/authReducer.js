@@ -2,8 +2,8 @@ import {
   AUTH_LOGOUT,
   AUTH_REQUEST,
   AUTH_REQUEST_ERROR,
-  AUTH_REQUEST_SUCCESS
-} from './action';
+  AUTH_REQUEST_SUCCESS,
+} from './authAction';
 
 const initialState = {
   loading: false,
@@ -17,6 +17,7 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        error: '',
       };
     case AUTH_REQUEST_SUCCESS:
       return {

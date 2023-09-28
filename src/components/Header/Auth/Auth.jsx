@@ -6,9 +6,10 @@ import {Text} from '../../../UI/Text';
 import {useState} from 'react';
 import Logout from './Logout';
 import {useAuth} from '../../../hooks/useAuth';
+import AuthLoader from '../../../UI/Loader';
 
 export const Auth = () => {
-  const [auth, clearAuth] = useAuth();
+  const [auth, loading, clearAuth] = useAuth();
   const [showLogoutBtn, setShowLogoutBtn] = useState(false);
 
   const handleLogoutBtn = () => {
@@ -17,7 +18,9 @@ export const Auth = () => {
 
   return (
     <div className={style.container}>
-      {auth.name ? (
+      {loading ? (
+        <AuthLoader />
+      ) : auth.name ? (
         <button className={style.btn} onClick={handleLogoutBtn}>
           <img
             className={style.img}
