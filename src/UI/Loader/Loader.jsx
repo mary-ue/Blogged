@@ -1,4 +1,4 @@
-import RingLoader from 'react-spinners/ClipLoader';
+import MoonLoader from 'react-spinners/MoonLoader';
 import PropTypes from 'prop-types';
 
 export const Loader = ({
@@ -7,7 +7,7 @@ export const Loader = ({
   size = 30
 }) => {
   return (
-    <RingLoader color={color} css={css} size={size} />
+    <MoonLoader color={color} css={css} size={size} />
   );
 };
 
