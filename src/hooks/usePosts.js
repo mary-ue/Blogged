@@ -13,7 +13,7 @@ export const usePosts = () => {
 
   useEffect(() => {
     dispatch(postsRequestAsync());
-  }, [token]);
+  }, [token, dispatch]);
 
   return [posts, delPosts];
 };

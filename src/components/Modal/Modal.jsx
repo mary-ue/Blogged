@@ -4,13 +4,19 @@ import PropTypes from 'prop-types';
 import style from './Modal.module.css';
 import {ReactComponent as CloseIcon} from './img/close.svg';
 import Markdown from 'markdown-to-jsx';
-import {useCommentsData} from '../../hooks/useCommentsData';
+// import {useCommentsData} from '../../hooks/useCommentsData';
 import {Text} from '../../UI/Text';
 import {FormComment} from './FormComment/FormComment';
 import {Comments} from './Comments/Comments';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  commentsClear,
+  commentsRequestAsync
+} from '../../store/comments/commentsAction';
 
 export const Modal = ({closeModal, id}) => {
-  const [commentsData, clearCommentsData] = useCommentsData(id);
+  const dispatch = useDispatch();
+  const commentsData = useSelector(state => state.commentsReducer.data);
   const [isLoading, setIsLoading] = useState(true);
   const post = commentsData[0];
   const comments = commentsData[1];
@@ -20,16 +26,19 @@ export const Modal = ({closeModal, id}) => {
     const target = evt.target;
     if (target === overlayRef.current) {
       closeModal();
-      clearCommentsData();
     }
   };
 
   const handleEscapeKey = evt => {
     if (evt.key === 'Escape') {
       closeModal();
-      clearCommentsData();
     }
   };
+
+  useEffect(() => {
+    dispatch(commentsRequestAsync(id));
+    console.log(commentsData);
+  }, [dispatch, id]);
 
   useEffect(() => {
     document.addEventListener('click', handleClick);
@@ -39,6 +48,7 @@ export const Modal = ({closeModal, id}) => {
     return () => {
       document.removeEventListener('click', handleClick);
       document.removeEventListener('keydown', handleEscapeKey);
+      dispatch(commentsClear());
     };
   }, []);
 

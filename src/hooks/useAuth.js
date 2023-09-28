@@ -12,7 +12,7 @@ export const useAuth = () => {
 
   useEffect(() => {
     dispatch(authRequestAsync());
-  }, [token]);
+  }, [token, dispatch]);
 
   const clearAuth = () => {
     dispatch(authLogout());
