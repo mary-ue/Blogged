@@ -16,28 +16,3 @@ export const getToken = () => {
 
   return token;
 };
-
-
-// import {useState, useEffect} from 'react';
-
-// export const useToken = (state) => {
-//   const [token, setToken] = useState(state);
-
-//   const delToken = () => {
-//     console.log('Logout');
-//     setToken(state);
-//     localStorage.removeItem('bearer');
-//     window.history.replaceState({}, document.title, window.location.origin);
-//   };
-
-//   useEffect(() => {
-//   }, []);
-
-//   useEffect(() => {
-//     if (token) {
-//       localStorage.setItem('bearer', token);
-//     }
-//   }, [token]);
-
-//   return [token, delToken];
-// };

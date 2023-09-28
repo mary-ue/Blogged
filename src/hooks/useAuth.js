@@ -1,16 +1,14 @@
-import {useContext, useEffect} from 'react';
-// import {tokenContext} from '../context/tokenContext';
-import {postsContext} from '../context/postsContext';
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {authLogout, authRequestAsync} from '../store/auth/authAction';
+import {usePosts} from '../hooks/usePosts';
 
 export const useAuth = () => {
   const auth = useSelector((state) => state.authReducer.data);
-  // const {token, delToken} = useContext(tokenContext);
   const token = useSelector((state) => state.tokenReducer.token);
   const loading = useSelector((state) => state.authReducer.loading);
   const dispatch = useDispatch();
-  const {delPosts} = useContext(postsContext);
+  const [, delPosts] = usePosts();
 
   useEffect(() => {
     dispatch(authRequestAsync());

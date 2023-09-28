@@ -1,10 +1,9 @@
-import {useContext} from 'react';
 import style from './List.module.css';
 import Post from './Post';
-import {postsContext} from '../../../context/postsContext';
+import {useSelector} from 'react-redux';
 
 export const List = () => {
-  const {posts} = useContext(postsContext);
+  const posts = useSelector(state => state.postsReducer.data);
 
   return (
     <ul className={style.list}>
