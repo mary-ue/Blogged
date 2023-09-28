@@ -7,6 +7,7 @@ const initialState = {
   loading: false,
   data: [],
   error: '',
+  status: null,
 };
 
 export const commentsReducer = (state = initialState, action) => {
@@ -16,6 +17,7 @@ export const commentsReducer = (state = initialState, action) => {
         ...state,
         loading: true,
         error: '',
+        status: 'loading',
       };
     case COMMENTS_REQUEST_SUCCESS:
       return {
@@ -23,12 +25,14 @@ export const commentsReducer = (state = initialState, action) => {
         loading: false,
         data: action.data,
         error: '',
+        status: 'loaded',
       };
     case COMMENTS_REQUEST_ERROR:
       return {
         ...state,
         loading: false,
         error: action.error,
+        status: 'error',
       };
     case COMMENTS_CLEAR:
       return {
@@ -36,6 +40,7 @@ export const commentsReducer = (state = initialState, action) => {
         loading: false,
         data: [],
         error: '',
+        status: null,
       };
     default:
       return state;

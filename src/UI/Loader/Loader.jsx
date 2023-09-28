@@ -1,7 +1,21 @@
 import RingLoader from 'react-spinners/ClipLoader';
+import PropTypes from 'prop-types';
 
-export const Loader = () => {
+export const Loader = ({
+  color = '#cc6633',
+  css = {display: 'block'},
+  size = 30
+}) => {
   return (
-    <RingLoader color='#cc6633' css={{display: 'block'}} size={30} />
+    <RingLoader color={color} css={css} size={size} />
   );
+};
+
+Loader.propTypes = {
+  color: PropTypes.string,
+  css: PropTypes.object,
+  size: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
 };
