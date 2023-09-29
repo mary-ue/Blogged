@@ -5,7 +5,8 @@ import {useSelector} from 'react-redux';
 
 export const List = () => {
   const posts = useSelector(state => state.postsReducer.data);
-  const isLoading = useSelector(state => state.postsReducer.loading);
+  const isLoading = useSelector(
+    state => state.postsReducer.status === 'loading');
 
   return (
     <ul className={style.list}>

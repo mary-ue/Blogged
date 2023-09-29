@@ -18,7 +18,6 @@ export const Modal = ({closeModal, id}) => {
   const dispatch = useDispatch();
   const commentsData = useSelector(state => state.commentsReducer.data);
   const status = useSelector(state => state.commentsReducer.status);
-  console.log(status);
   const post = commentsData[0];
   const comments = commentsData[1];
   const overlayRef = useRef(null);
@@ -38,7 +37,6 @@ export const Modal = ({closeModal, id}) => {
 
   useEffect(() => {
     dispatch(commentsRequestAsync(id));
-    console.log(commentsData);
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -71,12 +69,13 @@ export const Modal = ({closeModal, id}) => {
                   },
                 },
               }}>
-                {post.selftext}
+                {post?.selftext}
               </Markdown>
             </div>
             <Text As='p' className={style.author}>{post?.author}</Text>
             <FormComment />
-            <Comments comments={comments} />
+            {comments && comments.length > 0 &&
+              <Comments comments={comments} />}
             <button className={style.close} onClick={() => closeModal()}>
               <CloseIcon />
             </button>
