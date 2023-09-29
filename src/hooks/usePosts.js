@@ -3,9 +3,10 @@ import {useSelector, useDispatch} from 'react-redux';
 import {postsRequestAsync, postsClear} from '../store/posts/postsAction';
 
 export const usePosts = () => {
+  const dispatch = useDispatch();
   const token = useSelector(state => state.tokenReducer.token);
   const posts = useSelector(state => state.postsReducer.data);
-  const dispatch = useDispatch();
+  const isLoading = useSelector(state => state.postsReducer.isLoading);
 
   const delPosts = () => {
     dispatch(postsClear());
@@ -15,5 +16,5 @@ export const usePosts = () => {
     dispatch(postsRequestAsync());
   }, [token, dispatch]);
 
-  return [posts, delPosts];
+  return [posts, isLoading, delPosts];
 };

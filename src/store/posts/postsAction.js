@@ -15,7 +15,7 @@ export const postsRequestSucess = (data) => ({
 });
 
 export const postsRequestError = (error) => ({
-  type: POSTS_REQUEST_SUCCESS,
+  type: POSTS_REQUEST_ERROR,
   error,
 });
 

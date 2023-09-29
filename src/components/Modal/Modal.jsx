@@ -18,6 +18,7 @@ export const Modal = ({closeModal, id}) => {
   const dispatch = useDispatch();
   const commentsData = useSelector(state => state.commentsReducer.data);
   const status = useSelector(state => state.commentsReducer.status);
+  // console.log(status);
   const post = commentsData[0];
   const comments = commentsData[1];
   const overlayRef = useRef(null);
@@ -36,13 +37,16 @@ export const Modal = ({closeModal, id}) => {
   };
 
   useEffect(() => {
+    console.log('Modal rendered');
+  }, []);
+
+  useEffect(() => {
     dispatch(commentsRequestAsync(id));
   }, [dispatch, id]);
 
   useEffect(() => {
     document.addEventListener('click', handleClick);
     document.addEventListener('keydown', handleEscapeKey);
-    console.log('Modal');
 
     return () => {
       document.removeEventListener('click', handleClick);

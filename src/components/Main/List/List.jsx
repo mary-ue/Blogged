@@ -1,12 +1,12 @@
 import Loader from '../../../UI/Loader';
+import {usePosts} from '../../../hooks/usePosts';
 import style from './List.module.css';
 import Post from './Post';
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 
 export const List = () => {
-  const posts = useSelector(state => state.postsReducer.data);
-  const isLoading = useSelector(
-    state => state.postsReducer.status === 'loading');
+  const [posts, isLoading] = usePosts();
+  console.log(isLoading);
 
   return (
     <ul className={style.list}>

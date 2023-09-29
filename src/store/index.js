@@ -9,9 +9,9 @@ import {commentsReducer} from './comments/commentsReducer';
 
 const rootReducer = combineReducers({
   tokenReducer,
-  commentReducer,
   authReducer,
   postsReducer,
+  commentReducer,
   commentsReducer,
 });
 
