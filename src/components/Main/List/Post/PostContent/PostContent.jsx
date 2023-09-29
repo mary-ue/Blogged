@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import style from './PostContent.module.css';
 import PropTypes from 'prop-types';
 import {Text} from '../../../../../UI/Text';
@@ -7,9 +7,9 @@ import Modal from '../../../../Modal';
 export const PostContent = ({title, author, id}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    console.log('PostContent rendered');
-  }, []);
+  // useEffect(() => {
+  //   console.log('PostContent rendered');
+  // }, []);
 
   return (
     <div className={style.content}>

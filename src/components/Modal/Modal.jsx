@@ -36,9 +36,9 @@ export const Modal = ({closeModal, id}) => {
     }
   };
 
-  useEffect(() => {
-    console.log('Modal rendered');
-  }, []);
+  // useEffect(() => {
+  //   console.log('Modal rendered');
+  // }, []);
 
   useEffect(() => {
     dispatch(commentsRequestAsync(id));

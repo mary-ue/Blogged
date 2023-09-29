@@ -7,10 +7,13 @@ const initialState = {
 const UPDATE_TOKEN = 'UPDATE_TOKEN';
 const DELETE_TOKEN = 'DELETE_TOKEN';
 
-export const updateToken = token => ({
-  type: UPDATE_TOKEN,
-  token,
-});
+export const updateToken = token => {
+  console.log('Token updated:', token);
+  return {
+    type: UPDATE_TOKEN,
+    token,
+  };
+};
 
 export const deleteToken = () => ({
   type: DELETE_TOKEN,
@@ -19,10 +22,12 @@ export const deleteToken = () => ({
 
 export const tokenMiddleware = (store) => (next) => (action) => {
   if (action.type === UPDATE_TOKEN) {
+    // console.log('Token updated:', action.token);
     setToken(action.token);
   }
 
   if (action.type === DELETE_TOKEN) {
+    console.log('Token deleted');
     setToken('');
   }
 

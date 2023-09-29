@@ -13,6 +13,7 @@ export const Auth = () => {
   const [showLogoutBtn, setShowLogoutBtn] = useState(false);
 
   const handleLogoutBtn = () => {
+    console.log('Logout button clicked');
     setShowLogoutBtn(!showLogoutBtn);
   };
 

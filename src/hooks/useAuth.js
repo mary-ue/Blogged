@@ -8,7 +8,7 @@ export const useAuth = () => {
   const token = useSelector((state) => state.tokenReducer.token);
   const loading = useSelector((state) => state.authReducer.loading);
   const dispatch = useDispatch();
-  const [, delPosts] = usePosts();
+  const [, , delPosts] = usePosts();
 
   useEffect(() => {
     dispatch(authRequestAsync());
