@@ -8,7 +8,7 @@ const UPDATE_TOKEN = 'UPDATE_TOKEN';
 const DELETE_TOKEN = 'DELETE_TOKEN';
 
 export const updateToken = token => {
-  console.log('Token updated:', token);
+  // console.log('Token updated:', token);
   return {
     type: UPDATE_TOKEN,
     token,

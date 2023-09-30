@@ -3,13 +3,12 @@ import {Text} from '../../../UI/Text';
 import style from './FormComment.module.css';
 import {useSelector, useDispatch} from 'react-redux';
 import {updateComment} from '../../../store/commentReducer';
-import {useAuth} from '../../../hooks/useAuth';
 
 export const FormComment = () => {
-  const value = useSelector(state => state.commentReducer.comment);
   const dispatch = useDispatch();
+  const value = useSelector(state => state.commentReducer.comment);
+  const name = useSelector((state) => state.authReducer.data.name);
 
-  const [auth] = useAuth();
   const [isShowTextarea, setIsShowTextarea] = useState(false);
 
   const handleShowTextarea = () => {
@@ -30,7 +29,7 @@ export const FormComment = () => {
     <>
       {isShowTextarea ? (
       <form className={style.form}>
-        <Text As="h3" size={14} tsize={18}>{auth.name}</Text>
+        <Text As="h3" size={14} tsize={18}>{name}</Text>
         <textarea
           className={style.textarea}
           value={value}
