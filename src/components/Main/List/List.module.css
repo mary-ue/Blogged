@@ -8,3 +8,22 @@
 .end {
   flex-basis: 100%;
 }
+
+.btn {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  border-radius: 8px;
+  outline: none;
+  background-color: var(--orange);
+  color: var(--white);
+  border: 1px solid transparent
+}
+
+.btn:hover {
+  background-color: var(--blue);
+}
+
+.btn:focus {
+  border-color: var(--blue);
+}

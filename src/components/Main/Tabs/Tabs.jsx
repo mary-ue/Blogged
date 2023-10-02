@@ -12,7 +12,7 @@ import {Text} from '../../../UI/Text';
 import {useNavigate} from 'react-router-dom';
 
 const LIST = [
-  {value: 'Главная', Icon: Home, link: 'rising'},
+  {value: 'Главная', Icon: Home, link: ''},
   {value: 'Топ', Icon: Top, link: 'top'},
   {value: 'Лучшие', Icon: Best, link: 'best'},
   {value: 'Горячие', Icon: Hot, link: 'hot'},
@@ -72,7 +72,7 @@ export const Tabs = () => {
                 className={style.btn}
                 onClickFn={() => {
                   handleSelectedTitle(value);
-                  navigate(`/category/${link}`);
+                  navigate(link ? `/category/${link}` : '');
                 }
                 }
               >

@@ -4,7 +4,8 @@ import {
   POSTS_REQUEST,
   POSTS_REQUEST_ERROR,
   POSTS_REQUEST_SUCCESS,
-  POSTS_REQUEST_SUCCESS_AFTER
+  POSTS_REQUEST_SUCCESS_AFTER,
+  RESET_COUNT_PAGE
 } from './postsAction';
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
   after: '',
   isLast: false,
   page: '',
+  countPage: 0,
 };
 
 export const postsReducer = (state = initialState, action) => {
@@ -32,6 +34,7 @@ export const postsReducer = (state = initialState, action) => {
         error: '',
         after: action.after,
         isLast: !action.after,
+        countPage: state.countPage + 1,
       };
     case POSTS_REQUEST_SUCCESS_AFTER:
       return {
@@ -41,18 +44,21 @@ export const postsReducer = (state = initialState, action) => {
         error: '',
         after: action.after,
         isLast: !action.after,
+        countPage: state.countPage + 1,
       };
     case POSTS_REQUEST_ERROR:
       return {
         ...state,
         isLoading: false,
         error: action.error,
+        countPage: 0,
       };
     case POSTS_CLEAR:
       return {
         ...state,
         isLoading: false,
         data: [],
+        countPage: 0,
       };
     case CHANGE_PAGE:
       return {
@@ -60,6 +66,12 @@ export const postsReducer = (state = initialState, action) => {
         page: action.page,
         after: '',
         isLast: false,
+        countPage: 0,
+      };
+    case RESET_COUNT_PAGE:
+      return {
+        ...state,
+        countPage: 0,
       };
     default:
       return state;

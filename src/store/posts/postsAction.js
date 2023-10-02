@@ -6,6 +6,7 @@ export const POSTS_REQUEST_SUCCESS_AFTER = 'POSTS_REQUEST_SUCCESS_AFTER';
 export const POSTS_REQUEST_ERROR = 'POSTS_REQUEST_ERROR';
 export const POSTS_CLEAR = 'POSTS_CLEAR';
 export const CHANGE_PAGE = 'CHANGE_PAGE';
+export const RESET_COUNT_PAGE = 'RESET_COUNT_PAGE';
 
 export const postsRequest = () => ({
   type: POSTS_REQUEST,
@@ -35,6 +36,10 @@ export const postsClear = () => ({
 export const changePage = (page) => ({
   type: CHANGE_PAGE,
   page,
+});
+
+export const resetCountPage = () => ({
+  type: RESET_COUNT_PAGE,
 });
 
 export const postsRequestAsync = (newPage) => (dispatch, getState) => {

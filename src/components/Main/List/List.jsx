@@ -1,9 +1,10 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Loader from '../../../UI/Loader';
 import style from './List.module.css';
 import Post from './Post';
 import {useDispatch, useSelector} from 'react-redux';
-import {postsRequestAsync} from '../../../store/posts/postsAction';
+import {postsRequestAsync,
+  resetCountPage} from '../../../store/posts/postsAction';
 import {Outlet, useParams} from 'react-router-dom';
 
 export const List = () => {
@@ -13,13 +14,30 @@ export const List = () => {
   const endList = useRef(null);
   const dispatch = useDispatch();
   const {page} = useParams();
+  const countPage = useSelector((state) => state.postsReducer.countPage);
+  const [observeActive, setObserveActive] = useState(true);
+  const [isShowMoreBtn, setIsShowMoreBtn] = useState(false);
+
+  const handleMorePosts = () => {
+    dispatch(resetCountPage());
+    setObserveActive(true);
+    setIsShowMoreBtn(false);
+  };
+
+  useEffect(() => {
+    if (countPage === 3) {
+      dispatch(resetCountPage());
+      setObserveActive(false);
+      setIsShowMoreBtn(true);
+    }
+  }, [countPage]);
 
   useEffect(() => {
     dispatch(postsRequestAsync(page));
   }, [page]);
 
   useEffect(() => {
-    if (endList.current) {
+    if (endList.current && observeActive) {
       const observer = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
           dispatch(postsRequestAsync());
@@ -35,7 +53,7 @@ export const List = () => {
         }
       };
     }
-  }, [endList.current]);
+  }, [endList.current, observeActive]);
 
   return (
     (isLoading && !after) ? (
@@ -51,6 +69,12 @@ export const List = () => {
           }
           <li ref={endList} className={style.end} />
         </ul>
+        {
+          isShowMoreBtn &&
+            <button className={style.btn} onClick={handleMorePosts}>
+              Загрузить больше постов
+            </button>
+        }
         <Outlet />
       </>
   )
