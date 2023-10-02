@@ -46,8 +46,8 @@ export const authRequestAsync = () => (dispatch, getState) => {
       if (error.message === 'Unauthorized') {
         localStorage.removeItem('bearer');
         dispatch(deleteToken());
-        window.history.replaceState({},
-          document.title, window.location.origin);
+        // window.history.replaceState({},
+        //   document.title, window.location.origin);
         console.error('Unauthorized');
       }
       console.error(error);
