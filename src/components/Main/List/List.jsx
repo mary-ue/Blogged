@@ -4,6 +4,7 @@ import style from './List.module.css';
 import Post from './Post';
 import {useDispatch, useSelector} from 'react-redux';
 import {postsRequestAsync} from '../../../store/posts/postsAction';
+import {Outlet, useParams} from 'react-router-dom';
 
 export const List = () => {
   const posts = useSelector(state => state.postsReducer.data);
@@ -11,6 +12,11 @@ export const List = () => {
   const after = useSelector(state => state.postsReducer.after);
   const endList = useRef(null);
   const dispatch = useDispatch();
+  const {page} = useParams();
+
+  useEffect(() => {
+    dispatch(postsRequestAsync(page));
+  }, [page]);
 
   useEffect(() => {
     if (endList.current) {
@@ -24,7 +30,9 @@ export const List = () => {
       observer.observe(endList.current);
 
       return () => {
-        observer.disconnect();
+        if (endList.current) {
+          observer.unobserve(endList.current);
+        }
       };
     }
   }, [endList.current]);
@@ -33,15 +41,18 @@ export const List = () => {
     (isLoading && !after) ? (
       <Loader size={100} />
     ) : (
-    <ul className={style.list}>
-      {
-        posts &&
-        posts.map(postData => (
-          <Post key={postData.data.id} {...postData.data} />
-        ))
-      }
-      <li ref={endList} className={style.end} />
-    </ul>
+      <>
+        <ul className={style.list}>
+          {
+            posts &&
+            posts.map(postData => (
+              <Post key={postData.data.id} {...postData.data} />
+            ))
+          }
+          <li ref={endList} className={style.end} />
+        </ul>
+        <Outlet />
+      </>
   )
   );
 };

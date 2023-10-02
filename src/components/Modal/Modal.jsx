@@ -13,8 +13,11 @@ import {
   commentsClear,
   commentsRequestAsync
 } from '../../store/comments/commentsAction';
+import {useNavigate, useParams} from 'react-router-dom';
 
-export const Modal = ({closeModal, id}) => {
+export const Modal = () => {
+  const {id, page} = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const commentsData = useSelector(state => state.commentsReducer.data);
   const status = useSelector(state => state.commentsReducer.status);
@@ -26,13 +29,13 @@ export const Modal = ({closeModal, id}) => {
   const handleClick = evt => {
     const target = evt.target;
     if (target === overlayRef.current) {
-      closeModal();
+      navigate(`/category/${page}`);
     }
   };
 
   const handleEscapeKey = evt => {
     if (evt.key === 'Escape') {
-      closeModal();
+      navigate(`/category/${page}`);
     }
   };
 
@@ -80,7 +83,10 @@ export const Modal = ({closeModal, id}) => {
             <FormComment />
             {comments && comments.length > 0 &&
               <Comments comments={comments} />}
-            <button className={style.close} onClick={() => closeModal()}>
+            <button
+              className={style.close}
+              onClick={() => navigate(`/category/${page}`)}
+            >
               <CloseIcon />
             </button>
           </>

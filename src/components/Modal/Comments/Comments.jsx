@@ -9,23 +9,21 @@ export const Comments = ({comments}) => {
   return (
     comments.length ? (
       <ul className={style.list}>
-        {comments?.map(comment => {
-          return (
-            <li
-              key={`${comment.author_fullname}-${comment.subreddit_id}`}
-              className={style.item}
-            >
-              <Text As='h3' className={style.author} size={18} tsize={22}>
-                {comment.author}
-              </Text>
-              <Text As='p' className={style.comment} size={14} tsize={18}>
-                {comment.body}
-              </Text>
-              {comment.created &&
-                <PostTime created={comment.created} />}
-            </li>
-          );
-        })}
+        {comments?.map(comment => comment.body && (
+          <li
+            key={`${comment.author_fullname}-${comment.subreddit_id}`}
+            className={style.item}
+          >
+            <Text As='h3' className={style.author} size={18} tsize={22}>
+              {comment.author}
+            </Text>
+            <Text As='p' className={style.comment} size={14} tsize={18}>
+              {comment.body}
+            </Text>
+            {comment.created &&
+              <PostTime created={comment.created} />}
+          </li>
+        ))}
       </ul>
     ) : (
       <Text As="p">Нет комментариев</Text>

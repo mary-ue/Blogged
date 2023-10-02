@@ -3,19 +3,19 @@ import style from './Tabs.module.css';
 import PropTypes from 'prop-types';
 import {assignId} from '../../../utils/generateRandomId';
 import {debounceRaf} from '../../../utils/debounce';
-
 import {ReactComponent as ArrowIcon} from './img/arrow.svg';
 import {ReactComponent as Home} from './img/home1.svg';
 import {ReactComponent as Top} from './img/top.svg';
 import {ReactComponent as Best} from './img/best.svg';
 import {ReactComponent as Hot} from './img/hot.svg';
 import {Text} from '../../../UI/Text';
+import {useNavigate} from 'react-router-dom';
 
 const LIST = [
-  {value: 'Главная', Icon: Home},
-  {value: 'Топ', Icon: Top},
-  {value: 'Лучшие', Icon: Best},
-  {value: 'Горячие', Icon: Hot},
+  {value: 'Главная', Icon: Home, link: 'rising'},
+  {value: 'Топ', Icon: Top, link: 'top'},
+  {value: 'Лучшие', Icon: Best, link: 'best'},
+  {value: 'Горячие', Icon: Hot, link: 'hot'},
 ].map(assignId);
 
 export const Tabs = () => {
@@ -24,6 +24,7 @@ export const Tabs = () => {
   const [selectedTitle, setSelectedTitle] = useState(
     LIST.find((item) => item.value === 'Главная')
   );
+  const navigate = useNavigate();
 
   const handleResize = () => {
     if (document.documentElement.clientWidth < 768) {
@@ -62,14 +63,18 @@ export const Tabs = () => {
       )}
       {(isDropdownOpen || !isDropdown) && (
         <ul className={style.list} onClick={() => setIsDropdownOpen(false)}>
-          {LIST.map(({value, id, Icon}) => (
+          {LIST.map(({value, link, id, Icon}) => (
             <li className={style.item} key={id}>
               <Text
                 As='button'
                 size={16}
                 tsize={18}
                 className={style.btn}
-                onClickFn={() => handleSelectedTitle(value)}
+                onClickFn={() => {
+                  handleSelectedTitle(value);
+                  navigate(`/category/${link}`);
+                }
+                }
               >
                 {value}
                 {Icon && <Icon width={30} height={30} />}
