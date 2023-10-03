@@ -10,10 +10,10 @@ import {FormComment} from './FormComment/FormComment';
 import {Comments} from './Comments/Comments';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  commentsClear,
   commentsRequestAsync
 } from '../../store/comments/commentsAction';
 import {useNavigate, useParams} from 'react-router-dom';
+// import {commentsSlice} from '../../store/comments/commentsSlice';
 
 export const Modal = () => {
   const {id, page} = useParams();
@@ -21,7 +21,9 @@ export const Modal = () => {
   const dispatch = useDispatch();
   const commentsData = useSelector(state => state.commentsReducer.data);
   const status = useSelector(state => state.commentsReducer.status);
-  // console.log(status);
+  // console.log(commentsData);
+  // const data = useSelector(state => state.commentsReducer);
+  // console.log('data: ', data);
   const post = commentsData[0];
   const comments = commentsData[1];
   const overlayRef = useRef(null);
@@ -54,7 +56,7 @@ export const Modal = () => {
     return () => {
       document.removeEventListener('click', handleClick);
       document.removeEventListener('keydown', handleEscapeKey);
-      dispatch(commentsClear());
+      // dispatch(commentsSlice.actions.commentsClear());
     };
   }, []);
 
