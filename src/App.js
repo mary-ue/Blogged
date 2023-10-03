@@ -10,6 +10,15 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const accessToken = hashParams.get('access_token');
+
+    if (accessToken) {
+      window.location.replace('/');
+    }
+  }, []);
+
+  useEffect(() => {
     const token = getToken();
     dispatch(updateToken(token));
   }, [dispatch]);

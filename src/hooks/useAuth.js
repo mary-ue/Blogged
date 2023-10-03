@@ -1,6 +1,8 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {authLogout, authRequestAsync} from '../store/auth/authAction';
+import {postsClear} from '../store/posts/postsAction';
+import {deleteToken} from '../store/tokenReducer';
 // import {usePosts} from '../hooks/usePosts';
 
 export const useAuth = () => {
@@ -19,6 +21,8 @@ export const useAuth = () => {
     localStorage.removeItem('bearer');
     window.history.replaceState({}, document.title, window.location.origin);
     // delPosts();
+    dispatch(postsClear());
+    dispatch(deleteToken());
   };
 
   return [auth, loading, clearAuth];
