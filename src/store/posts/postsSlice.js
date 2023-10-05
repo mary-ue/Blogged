@@ -12,7 +12,7 @@ const initialState = {
 };
 
 export const postsSlice = createSlice({
-  name: 'postsReducer',
+  name: 'posts',
   initialState,
   reducers: {
     postsClear: (state) => {
@@ -32,25 +32,22 @@ export const postsSlice = createSlice({
   },
   extraReducers: {
     [postsRequestAsync.pending.type]: (state) => {
-      // console.log('pending: ', state.isLoading);
       state.isLoading = true;
       state.error = '';
-      // console.log('pending: ', state.isLoading);
     },
     [postsRequestAsync.fulfilled.type]: (state, action) => {
-      // console.log('fulfilled: ', action);
       state.isLoading = false;
       state.after = action.payload?.after || '';
       state.data = state.after ?
-        [...state.data, ...action.payload?.data.children || []] : state.data;
+        [...state.data, ...action.payload.data] : state.data;
       state.error = '';
       state.isLast = !state.after;
       state.countPage += 1;
-      console.log('fulfilled: ', action.payload);
+      console.log('fulfilled, action: ', action);
     },
     [postsRequestAsync.rejected.type]: (state, action) => {
       state.isLoading = false;
-      state.error = action.error.message;
+      state.error = action.payload.error;
       state.countPage = 0;
       console.error('Rejected error:', action.error);
     },

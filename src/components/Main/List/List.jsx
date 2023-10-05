@@ -4,7 +4,7 @@ import style from './List.module.css';
 import Post from './Post';
 import {useDispatch, useSelector} from 'react-redux';
 // import {postsRequest} from '../../../store/posts/postsAction';
-// import {resetCountPage} from '../../../store/posts/postsSlice';
+import {postsSlice} from '../../../store/posts/postsSlice';
 import {Outlet, useParams} from 'react-router-dom';
 import {postsRequestAsync} from '../../../store/posts/postsAction';
 
@@ -20,14 +20,14 @@ export const List = () => {
   const [isShowMoreBtn, setIsShowMoreBtn] = useState(false);
 
   const handleMorePosts = () => {
-    // dispatch(resetCountPage());
+    dispatch(postsSlice.actions.resetCountPage());
     setObserveActive(true);
     setIsShowMoreBtn(false);
   };
 
   useEffect(() => {
     if (countPage === 3) {
-      // dispatch(resetCountPage());
+      dispatch(postsSlice.actions.resetCountPage());
       setObserveActive(false);
       setIsShowMoreBtn(true);
     }
@@ -35,6 +35,8 @@ export const List = () => {
 
   useEffect(() => {
     dispatch(postsRequestAsync(page));
+    dispatch(postsSlice.actions.postsClear());
+    dispatch(postsSlice.actions.resetCountPage());
   }, [page]);
 
   useEffect(() => {
