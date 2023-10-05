@@ -1,78 +1,42 @@
+import {createAsyncThunk} from '@reduxjs/toolkit';
 import {URL_API, USER_AGENT} from '../../api/const';
+// import postsSlice from './postsSlice';
+// import {changePage} from './postsSlice';
 
-export const POSTS_REQUEST = 'POSTS_REQUEST';
-export const POSTS_REQUEST_SUCCESS = 'POSTS_REQUEST_SUCCESS';
-export const POSTS_REQUEST_SUCCESS_AFTER = 'POSTS_REQUEST_SUCCESS_AFTER';
-export const POSTS_REQUEST_ERROR = 'POSTS_REQUEST_ERROR';
-export const POSTS_CLEAR = 'POSTS_CLEAR';
-export const CHANGE_PAGE = 'CHANGE_PAGE';
-export const RESET_COUNT_PAGE = 'RESET_COUNT_PAGE';
+export const postsRequestAsync = createAsyncThunk('posts/fetch',
+  (newPage, {getState, dispatch}) => {
+    let page = getState().postsReducer.page;
+    if (newPage) {
+      page = newPage;
+      // dispatch(changePage(page));
+    }
 
-export const postsRequest = () => ({
-  type: POSTS_REQUEST,
-});
+    const token = getState().tokenReducer.token;
+    // console.log('token: ', token);
+    const after = getState().postsReducer.after;
+    // console.log('after: ', after);
+    // const isLoading = getState().postsReducer.isLoading;
+    // console.log('isLoading: ', isLoading);
+    // const isLast = getState().postsReducer.isLast;
+    // console.log('isLast: ', isLast);
 
-export const postsRequestSucess = (data) => ({
-  type: POSTS_REQUEST_SUCCESS,
-  data: data.children,
-  after: data.after,
-});
+    // if (!token || isLoading || isLast) return;
 
-export const postsRequestSucessAfter = (data) => ({
-  type: POSTS_REQUEST_SUCCESS_AFTER,
-  data: data.children,
-  after: data.after,
-});
+    // dispatch(postsRequest());
 
-export const postsRequestError = (error) => ({
-  type: POSTS_REQUEST_ERROR,
-  error,
-});
-
-export const postsClear = () => ({
-  type: POSTS_CLEAR,
-});
-
-export const changePage = (page) => ({
-  type: CHANGE_PAGE,
-  page,
-});
-
-export const resetCountPage = () => ({
-  type: RESET_COUNT_PAGE,
-});
-
-export const postsRequestAsync = (newPage) => (dispatch, getState) => {
-  let page = getState().postsReducer.page;
-  if (newPage) {
-    page = newPage;
-    dispatch(changePage(page));
-  }
-
-  const token = getState().tokenReducer.token;
-  const after = getState().postsReducer.after;
-  const isLoading = getState().postsReducer.isLoading;
-  const isLast = getState().postsReducer.isLast;
-
-  if (!token || isLoading || isLast) return;
-
-  dispatch(postsRequest());
-
-  fetch(`${URL_API}/${page}?limit=10&${after ? `after=${after}` : ''}`, {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'User-Agent': USER_AGENT,
-    },
-  }).then(response => response.json())
-    .then(posts => {
-      if (after) {
-        dispatch(postsRequestSucessAfter(posts.data));
-      } else {
-        dispatch(postsRequestSucess(posts.data));
-      }
-    })
-    .catch(error => {
-      dispatch(postsRequestError(error));
-      console.error(error.message);
-    });
-};
+    fetch(
+      `${URL_API}/${page}?limit=10&${after ? `after=${after}` : ''}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'User-Agent': USER_AGENT,
+        },
+      }).then(response => response.json())
+      .then(posts => {
+        console.log('posts.data: ', posts.data);
+        return posts.data;
+      })
+      .catch(error => {
+        console.error(error.message);
+        return error.message;
+      });
+  });

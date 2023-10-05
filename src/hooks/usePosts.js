@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {postsRequestAsync} from '../store/posts/postsAction';
+import {postsRequestAsync} from '../store/posts/postsSlice';
 
 export const usePosts = () => {
   const dispatch = useDispatch();

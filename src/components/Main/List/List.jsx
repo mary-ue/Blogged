@@ -3,9 +3,10 @@ import Loader from '../../../UI/Loader';
 import style from './List.module.css';
 import Post from './Post';
 import {useDispatch, useSelector} from 'react-redux';
-import {postsRequestAsync,
-  resetCountPage} from '../../../store/posts/postsAction';
+// import {postsRequest} from '../../../store/posts/postsAction';
+// import {resetCountPage} from '../../../store/posts/postsSlice';
 import {Outlet, useParams} from 'react-router-dom';
+import {postsRequestAsync} from '../../../store/posts/postsAction';
 
 export const List = () => {
   const posts = useSelector(state => state.postsReducer.data);
@@ -19,14 +20,14 @@ export const List = () => {
   const [isShowMoreBtn, setIsShowMoreBtn] = useState(false);
 
   const handleMorePosts = () => {
-    dispatch(resetCountPage());
+    // dispatch(resetCountPage());
     setObserveActive(true);
     setIsShowMoreBtn(false);
   };
 
   useEffect(() => {
     if (countPage === 3) {
-      dispatch(resetCountPage());
+      // dispatch(resetCountPage());
       setObserveActive(false);
       setIsShowMoreBtn(true);
     }
