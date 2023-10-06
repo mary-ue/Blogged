@@ -31,11 +31,13 @@ export const postsSlice = createSlice({
     },
   },
   extraReducers: {
-    [postsRequestAsync.pending.type]: (state) => {
+    [postsRequestAsync.pending.type]: (state, action) => {
+      // console.log('pending: ', action);
       state.isLoading = true;
       state.error = '';
     },
     [postsRequestAsync.fulfilled.type]: (state, action) => {
+      // console.log('fulfilled: ', action);
       state.isLoading = false;
       state.after = action.payload?.after || '';
       state.data = state.after ?
@@ -43,9 +45,10 @@ export const postsSlice = createSlice({
       state.error = '';
       state.isLast = !state.after;
       state.countPage += 1;
-      console.log('fulfilled, action: ', action);
+      // console.log('fulfilled, action: ', action);
     },
     [postsRequestAsync.rejected.type]: (state, action) => {
+      // console.log('rejected: ', action);
       state.isLoading = false;
       state.error = action.payload.error;
       state.countPage = 0;

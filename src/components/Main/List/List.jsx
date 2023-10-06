@@ -43,6 +43,7 @@ export const List = () => {
     if (endList.current && observeActive) {
       const observer = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
+          console.log('postsRequestAsync');
           dispatch(postsRequestAsync());
         }
       }, {
