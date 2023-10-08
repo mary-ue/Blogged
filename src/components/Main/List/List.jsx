@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef} from 'react';
 import Loader from '../../../UI/Loader';
 import style from './List.module.css';
 import Post from './Post';
@@ -16,20 +16,20 @@ export const List = () => {
   const dispatch = useDispatch();
   const {page} = useParams();
   const countPage = useSelector((state) => state.postsReducer.countPage);
-  const [observeActive, setObserveActive] = useState(true);
-  const [isShowMoreBtn, setIsShowMoreBtn] = useState(false);
+  // const [observeActive, setObserveActive] = useState(true);
+  // const [isShowMoreBtn, setIsShowMoreBtn] = useState(false);
 
-  const handleMorePosts = () => {
-    dispatch(postsSlice.actions.resetCountPage());
-    setObserveActive(true);
-    setIsShowMoreBtn(false);
-  };
+  // const handleMorePosts = () => {
+  //   dispatch(postsSlice.actions.resetCountPage());
+  //   setObserveActive(true);
+  //   setIsShowMoreBtn(false);
+  // };
 
   useEffect(() => {
     if (countPage === 3) {
       dispatch(postsSlice.actions.resetCountPage());
-      setObserveActive(false);
-      setIsShowMoreBtn(true);
+      // setObserveActive(false);
+      // setIsShowMoreBtn(true);
     }
   }, [countPage]);
 
@@ -40,9 +40,10 @@ export const List = () => {
   }, [page]);
 
   useEffect(() => {
-    if (endList.current && observeActive) {
+    // if (endList.current && observeActive) {
+    if (endList.current) {
       const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
+        if (posts && entries[0].isIntersecting && endList.current) {
           console.log('postsRequestAsync');
           dispatch(postsRequestAsync());
         }
@@ -57,7 +58,8 @@ export const List = () => {
         }
       };
     }
-  }, [endList.current, observeActive]);
+  // }, [endList.current, observeActive]);
+  }, [endList.current]);
 
   return (
     (isLoading && !after) ? (
@@ -74,10 +76,10 @@ export const List = () => {
           <li ref={endList} className={style.end} />
         </ul>
         {
-          isShowMoreBtn &&
+        /*  isShowMoreBtn &&
             <button className={style.btn} onClick={handleMorePosts}>
               Загрузить больше постов
-            </button>
+            </button> */
         }
         <Outlet />
       </>

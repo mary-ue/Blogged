@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+// import {produce} from 'immer';
 import {postsRequestAsync} from './postsAction';
 
 const initialState = {
@@ -37,22 +38,36 @@ export const postsSlice = createSlice({
       state.error = '';
     },
     [postsRequestAsync.fulfilled.type]: (state, action) => {
-      // console.log('fulfilled: ', action);
+      // console.log(typeof state.data);
       state.isLoading = false;
-      state.after = action.payload?.after || '';
-      state.data = state.after ?
-        [...state.data, ...action.payload.data] : state.data;
+      // console.log(state.data);
+      if (!state.data) return;
+      state.data = state.data ?
+        [...state.data, ...action.payload.data] :
+        [...action.payload.data];
+      // state.data = produce(state.data, draft => {
+      //   draft = draft ?
+      //     [...draft, ...action.payload.data] :
+      //     [...action.payload.data];
+      // });
+
+      // [...state.data, ...action.payload.data] : action.payload.data;
       state.error = '';
+      state.after = action.payload?.after || '';
       state.isLast = !state.after;
       state.countPage += 1;
       // console.log('fulfilled, action: ', action);
+      // console.log(typeof state.data);
+      // console.log('fulfilled, data------------------: ',
+      //   state.data);
+      // console.log('fulfilled, payload---------------:', action.payload.data);
     },
     [postsRequestAsync.rejected.type]: (state, action) => {
       // console.log('rejected: ', action);
       state.isLoading = false;
       state.error = action.payload.error;
       state.countPage = 0;
-      console.error('Rejected error:', action.error);
+      // console.error('Rejected error:', action.error);
     },
   },
 });

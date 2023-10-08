@@ -38,8 +38,8 @@ export const postsRequestAsync = createAsyncThunk('posts/fetch',
         },
       }).then(response => response.json())
       .then(posts => {
-        console.log('posts.data: ',
-          {after: posts.data.after, data: posts.data.children});
+        // console.log('posts.data: ',
+        //   {after: posts.data.after, data: posts.data.children});
         return {after: posts.data.after, data: posts.data.children};
       })
       .catch(error => {
