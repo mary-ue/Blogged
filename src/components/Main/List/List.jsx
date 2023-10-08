@@ -7,9 +7,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {postsSlice} from '../../../store/posts/postsSlice';
 import {Outlet, useParams} from 'react-router-dom';
 import {postsRequestAsync} from '../../../store/posts/postsAction';
+// import {usePosts} from '../../../hooks/usePosts';
 
 export const List = () => {
   const posts = useSelector(state => state.postsReducer.data);
+  // const [posts, isLoading] = usePosts();
   const isLoading = useSelector(state => state.postsReducer.isLoading);
   const after = useSelector(state => state.postsReducer.after);
   const endList = useRef(null);
@@ -43,7 +45,7 @@ export const List = () => {
     // if (endList.current && observeActive) {
     if (endList.current) {
       const observer = new IntersectionObserver((entries) => {
-        if (posts && entries[0].isIntersecting && endList.current) {
+        if (entries[0].isIntersecting && endList.current) {
           console.log('postsRequestAsync');
           dispatch(postsRequestAsync());
         }

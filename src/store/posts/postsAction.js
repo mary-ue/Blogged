@@ -20,9 +20,9 @@ export const postsRequestAsync = createAsyncThunk('posts/fetch',
     const token = getState().tokenReducer.token;
     // console.log('token: ', token);
     const after = getState().postsReducer.after;
-    console.log('after: ', after);
+    // console.log('after: ', after);
     const isLoading = getState().postsReducer.isLoading;
-    console.log('isLoading: ', isLoading);
+    // console.log('isLoading: ', isLoading);
     const isLast = getState().postsReducer.isLast;
     // console.log('isLast: ', isLast);
 

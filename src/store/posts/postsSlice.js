@@ -31,44 +31,28 @@ export const postsSlice = createSlice({
       state.countPage = 0;
     },
   },
-  extraReducers: {
-    [postsRequestAsync.pending.type]: (state, action) => {
-      // console.log('pending: ', action);
-      state.isLoading = true;
-      state.error = '';
-    },
-    [postsRequestAsync.fulfilled.type]: (state, action) => {
-      // console.log(typeof state.data);
-      state.isLoading = false;
-      // console.log(state.data);
-      if (!state.data) return;
-      state.data = state.data ?
-        [...state.data, ...action.payload.data] :
-        [...action.payload.data];
-      // state.data = produce(state.data, draft => {
-      //   draft = draft ?
-      //     [...draft, ...action.payload.data] :
-      //     [...action.payload.data];
-      // });
-
-      // [...state.data, ...action.payload.data] : action.payload.data;
-      state.error = '';
-      state.after = action.payload?.after || '';
-      state.isLast = !state.after;
-      state.countPage += 1;
-      // console.log('fulfilled, action: ', action);
-      // console.log(typeof state.data);
-      // console.log('fulfilled, data------------------: ',
-      //   state.data);
-      // console.log('fulfilled, payload---------------:', action.payload.data);
-    },
-    [postsRequestAsync.rejected.type]: (state, action) => {
-      // console.log('rejected: ', action);
-      state.isLoading = false;
-      state.error = action.payload.error;
-      state.countPage = 0;
-      // console.error('Rejected error:', action.error);
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(postsRequestAsync.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addCase(postsRequestAsync.fulfilled, (state, action) => {
+        // console.log(state.data);
+        state.isLoading = false;
+        state.after = action.payload?.after || '';
+        state.isLast = !state.after;
+        state.data = state.data.length ? // Uncaught (in promise) TypeError:
+        // Cannot read properties of undefined (reading 'data')
+          state.data.concat(action.payload.data) : action.payload.data;
+        state.error = '';
+        state.countPage += 1;
+      })
+      .addCase(postsRequestAsync.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload.error;
+        state.countPage = 0;
+      });
   },
 });
 
