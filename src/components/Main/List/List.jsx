@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {postsSlice} from '../../../store/posts/postsSlice';
 import {Outlet, useParams} from 'react-router-dom';
 import {postsRequestAsync} from '../../../store/posts/postsAction';
+// import {postsRequestAsync} from '../../../store/posts/postsAction';
 // import {usePosts} from '../../../hooks/usePosts';
 
 export const List = () => {
@@ -45,9 +46,10 @@ export const List = () => {
     // if (endList.current && observeActive) {
     if (endList.current) {
       const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && endList.current) {
-          console.log('postsRequestAsync');
-          dispatch(postsRequestAsync());
+        if (entries && entries.length > 0 &&
+          entries[0].isIntersecting && endList.current) {
+          console.log('postsRequestAsync', page);
+          dispatch(postsRequestAsync(page));
         }
       }, {
         rootMargin: '100px',
@@ -64,6 +66,7 @@ export const List = () => {
   }, [endList.current]);
 
   return (
+    // (isLoading && !after) ? (
     (isLoading && !after) ? (
       <Loader size={100} />
     ) : (

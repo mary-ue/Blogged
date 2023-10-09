@@ -17,7 +17,7 @@ export const postsSlice = createSlice({
   initialState,
   reducers: {
     postsClear: (state) => {
-      state.isLoading = false;
+      // state.isLoading = false;
       state.data = [];
       state.countPage = 0;
     },
@@ -39,18 +39,23 @@ export const postsSlice = createSlice({
       })
       .addCase(postsRequestAsync.fulfilled, (state, action) => {
         // console.log(state.data);
+        if (!action.payload) {
+          return;
+        }
         state.isLoading = false;
-        state.after = action.payload?.after || '';
+        state.after = action.payload.after;
         state.isLast = !state.after;
-        state.data = state.data.length ? // Uncaught (in promise) TypeError:
-        // Cannot read properties of undefined (reading 'data')
-          state.data.concat(action.payload.data) : action.payload.data;
+        state.data = state.data.length ?
+          [...state.data, ...action.payload.data] : [...action.payload.data];
         state.error = '';
         state.countPage += 1;
+        console.log('after::::::::::::: ', state.after);
       })
       .addCase(postsRequestAsync.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload.error;
+        if (!action.payload) return;
+        console.log(action);
+        state.error = action.error;
         state.countPage = 0;
       });
   },

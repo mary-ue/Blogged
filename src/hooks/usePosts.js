@@ -7,13 +7,15 @@ export const usePosts = () => {
   const token = useSelector(state => state.tokenReducer.token);
   const posts = useSelector(state => state.postsReducer.data);
   const isLoading = useSelector(state => state.postsReducer.isLoading);
+  const page = useSelector(state => state.postsReducer.page);
 
   // const delPosts = () => {
   //   dispatch(postsClear());
   // };
 
   useEffect(() => {
-    dispatch(postsRequestAsync());
+    // if (!page) return;      // !ВЕРНУТЬ
+    dispatch(postsRequestAsync(page));
   }, [token]);
 
   return [posts, isLoading];
