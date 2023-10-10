@@ -40,6 +40,7 @@ export const postsSlice = createSlice({
       .addCase(postsRequestAsync.fulfilled, (state, action) => {
         // console.log(state.data);
         if (!action.payload) {
+          state.isLoading = false;
           return;
         }
         state.isLoading = false;

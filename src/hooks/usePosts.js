@@ -14,7 +14,7 @@ export const usePosts = () => {
   // };
 
   useEffect(() => {
-    // if (!page) return;      // !ВЕРНУТЬ
+    if (!page) return;
     dispatch(postsRequestAsync(page));
   }, [token]);
 
