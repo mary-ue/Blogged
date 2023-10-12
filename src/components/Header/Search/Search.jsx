@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import style from './Search.module.css';
 import {useState} from 'react';
 import {searchRequest} from '../../../store/search/searchAction';
@@ -6,11 +6,10 @@ import {searchRequest} from '../../../store/search/searchAction';
 export const Search = () => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
-  const token = useSelector(state => state.tokenReducer.token);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    dispatch(searchRequest({token, search}));
+    dispatch(searchRequest(search));
   };
 
   return (

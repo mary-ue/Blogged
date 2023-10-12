@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   isLoading: false,
-  data: [],
+  posts: [],
   error: '',
   after: '',
   isLast: false,
