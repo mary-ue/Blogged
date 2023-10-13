@@ -15,7 +15,7 @@ export const List = () => {
   // const [posts, isLoading] = usePosts();
   const isLoading = useSelector(state => state.postsReducer.isLoading);
   const isLast = useSelector(state => state.postsReducer.isLast);
-  console.log('isLoading------------------------------------', isLoading);
+  // console.log('isLoading------------------------------------', isLoading);
   const after = useSelector(state => state.postsReducer.after);
   const endList = useRef(null);
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ export const List = () => {
         if (entries && entries.length > 0 &&
           entries[0].isIntersecting && endList.current &&
           !isLoading && !isLast) {
-          console.log('postsRequestAsync', page);
+          // console.log('postsRequestAsync', page);
           dispatch(postsRequestAsync(page));
         }
       }, {

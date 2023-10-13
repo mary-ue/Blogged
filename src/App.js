@@ -1,35 +1,36 @@
 import Header from './components/Header';
 import Main from './components/Main';
+import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
+import Loader from './UI/Loader';
+import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {updateToken} from './store/tokenReducer';
-import {getToken} from './api/token';
-import {useEffect} from 'react';
-import {Route, Routes, useNavigate} from 'react-router-dom';
+import {setToken} from './api/token';
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const token = new URLSearchParams(location.hash.substring(1))
+    .get('access_token');
 
+  console.log(token);
   useEffect(() => {
-    const token = getToken();
-    dispatch(updateToken(token));
-  }, [dispatch]);
-
-  useEffect(() => {
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const accessToken = hashParams.get('access_token');
-
-    if (accessToken) {
+    if (token) {
+      setToken(token);
+      dispatch(updateToken(token));
       navigate('/');
+    } else if (localStorage.getItem('bearer')) {
+      dispatch(updateToken(localStorage.getItem('bearer')));
     }
-  }, [navigate]);
+  }, [dispatch, token, navigate]);
 
   return (
     <Routes>
-      <Route path='/auth' element={
+      <Route path='/auth/:access_token' element={
         <>
           <Header />
-          <Main />
+          <Loader size={100} />
         </>
       } />
       <Route path='*' element={

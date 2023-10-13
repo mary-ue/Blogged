@@ -8,7 +8,7 @@ export const postsRequestAsync = createAsyncThunk('posts/fetch',
     const after = getState().postsReducer.after;
     const isLast = getState().postsReducer.isLast;
 
-    console.log('start');
+    // console.log('start');
 
     // if (!token || isLoading || isLast) return; //!!!!!!!!!!!
     if (!token || isLast) {

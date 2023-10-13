@@ -50,7 +50,7 @@ export const postsSlice = createSlice({
           [...state.data, ...action.payload.data] : [...action.payload.data];
         state.error = '';
         state.countPage += 1;
-        console.log('after::::::::::::: ', state.after);
+        // console.log('after::::::::::::: ', state.after);
       })
       .addCase(postsRequestAsync.rejected, (state, action) => {
         state.isLoading = false;
