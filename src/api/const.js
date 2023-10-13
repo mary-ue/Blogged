@@ -5,4 +5,5 @@ export const CLIENT_ID = 'U_RmeyNeBsuQlA0o9cT1Iw';
 export const RESPONSE_TYPE = 'token';
 export const RANDOM_STRING = 'random_string';
 export const REDIRECT_URI = 'https://mary-ue.github.io/Blogged/auth';
+// export const REDIRECT_URI = 'http://localhost:3000/Blogged/auth';
 export const SCOPE = 'identity submit read';

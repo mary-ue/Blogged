@@ -22,10 +22,16 @@ function App() {
     if (accessToken) {
       navigate('/');
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <Routes>
+      <Route path='/auth' element={
+        <>
+          <Header />
+          <Main />
+        </>
+      } />
       <Route path='*' element={
         <>
           <Header />
